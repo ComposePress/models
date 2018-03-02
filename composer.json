@@ -1,0 +1,17 @@
+{
+  "name": "composepress/models",
+  "authors": [
+    {
+      "name": "Derrick Hammer",
+      "email": "derrick@derrickhammer.com"
+    }
+  ],
+  "require": {
+    "composepress/core": "^0.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ComposePress\\": "src/"
+    }
+  }
+}
