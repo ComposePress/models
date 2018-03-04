@@ -103,7 +103,7 @@ abstract class Model extends Component {
 	 */
 	protected function build_schema( $mode ) {
 		$schema_data = static::get_schema( $mode );
-		$schema      = $this->wpdb->prefix;
+		$schema      = 'CREATE TABLE ' . $this->wpdb->prefix;
 		if ( self::BUILD_MODE_MULTISITE_GLOBAL === $mode ) {
 			$schema = $this->wpdb->base_prefix;
 		}
