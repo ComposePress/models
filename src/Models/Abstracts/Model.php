@@ -116,7 +116,19 @@ abstract class Model extends Component {
 			$field_line = "{$name} {$field['type']}";
 
 			if ( ! empty( $field['length'] ) ) {
-				$field_line .= "({$field['length']})";
+				$field_line .= '(';
+				if ( is_array( $field['length'] ) ) {
+					$assoc = array_values( $field['length'] ) !== $field['length'];
+					if ( $assoc ) {
+						$field_line .= "{$field['length']['digits']},{$field['length']['decimals']}";
+					}
+					if ( ! $assoc ) {
+						$field_line .= implode( ',', $field['length'] );
+					}
+				} else {
+					$field_line .= $field['length'];
+				}
+				$field_line .= ')';
 			}
 			$field_line .= ' ';
 
