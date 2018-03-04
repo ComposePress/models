@@ -203,7 +203,7 @@ abstract class Model extends Component {
 
 		$charset_collate = $this->wpdb->get_charset_collate();
 
-		$schema .= implode( ",\n", $field_lines ) . "\m";
+		$schema .= implode( ",\n", $field_lines ) . "\n";
 		$schema .= ") {$charset_collate};";
 
 		return $schema;
