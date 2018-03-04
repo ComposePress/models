@@ -170,9 +170,9 @@ abstract class Model extends Component {
 			$primary_used = false;
 			foreach ( $schema_data['keys'] as $key => $properties ) {
 				$field_line = '';
+				$assoc      = array_values( $field['length'] ) !== $field['length'];
 				$unique     = ! empty( $properties['unique'] );
 				$primary    = ! empty( $properties['primary'] );
-
 				if ( $primary && $primary_used ) {
 					continue;
 				}
@@ -181,6 +181,10 @@ abstract class Model extends Component {
 					$field_line .= 'UNIQUE ';
 				} else if ( $primary ) {
 					$field_line .= 'PRIMARY ';
+				}
+
+				if ( ! $assoc ) {
+					$properties = [ 'columns' => $properties ];
 				}
 
 				$field_line .= 'KEY ';
