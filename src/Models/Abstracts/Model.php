@@ -133,7 +133,7 @@ abstract class Model extends Component {
 			$field_line .= ' ';
 
 			if ( ! empty( $field['character_set'] ) ) {
-				$field_line .= "CHARACTER SET ({$field['character_set']}) ";
+				$field_line .= "CHARACTER SET {$field['character_set']} ";
 			}
 			if ( isset( $field['default'] ) && 'NULL' === strtoupper( $field['default'] ) ) {
 				$field['default'] = null;
