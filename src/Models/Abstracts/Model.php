@@ -109,8 +109,17 @@ abstract class Model extends Component {
 		}
 		$schema      .= static::get_name() . ' (' . "\n";
 		$field_lines = [];
-		foreach ( $schema_data['fields'] as $field ) {
-			$field_line = "{$field['name']} {$field['type']} ";
+		foreach ( $schema_data['fields'] as $name => $field ) {
+			if ( ! empty( $field['name'] ) ) {
+				$name = $field['name'];
+			}
+			$field_line = "{$name} {$field['type']}";
+
+			if ( ! empty( $field['length'] ) ) {
+				$field_line .= "({$field['length']})";
+			}
+			$field_line .= ' ';
+
 			if ( isset( $field['default'] ) && null !== $field['default'] ) {
 				$field_line .= "{$field['default']} ";
 			}
