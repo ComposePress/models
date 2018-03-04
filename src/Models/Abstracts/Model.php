@@ -124,7 +124,16 @@ abstract class Model extends Component {
 				$field_line .= "({$field['character_set']}) ";
 			}
 			if ( isset( $field['default'] ) && null !== $field['default'] ) {
-				$field_line .= "{$field['default']} ";
+				$numeric    = is_numeric( $field['default'] );
+				$field_line .= "DEFAULT ";
+				if ( ! $numeric ) {
+					$field_line .= "'";
+				}
+				$field_line .= $field['default'];
+				if ( ! $numeric ) {
+					$field_line .= "'";
+				}
+				$field_line .= ' ';
 			}
 			if ( empty( $field['is_null'] ) ) {
 				$field_line .= "NOT NULL ";
