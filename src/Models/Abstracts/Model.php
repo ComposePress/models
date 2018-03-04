@@ -41,7 +41,7 @@ abstract class Model extends Component {
 	 *
 	 */
 	public function init() {
-		register_activation_hook( $this->plugin->plugin_file, [ $this, 'build' ] );
+		add_action( 'activate_' . plugin_basename( $this->plugin->plugin_file ), [ $this, 'build' ], 11 );
 		if ( is_multisite() && ! static::get_use_multisite_global_table() ) {
 			add_action( 'wpmu_new_blog', [ get_called_class(), 'build_new_blog' ] );
 			add_filter( 'wpmu_drop_tables', [ get_called_class(), 'update_mu_tables' ], 10, 2 );
