@@ -158,10 +158,45 @@ abstract class Model extends Component {
 			$field_line    = rtrim( $field_line );
 			$field_lines[] = $field_line;
 		}
-		$field_line      = 'PRIMARY KEY (';
-		$field_line      .= implode( ',', (array) $schema_data['primary_key'] );
-		$field_line      .= ')';
-		$field_lines []  = $field_line;
+
+		if ( ! empty( $schema_data['primary_key'] ) ) {
+			if ( empty( $schema_data['keys'] ) ) {
+				$schema_data['keys'] = [];
+			}
+			$schema_data['keys'][] = [ 'primary' => true, 'columns' => $schema_data['primary_key'] ];
+		}
+
+		if ( ! empty( $schema_data['keys'] ) && is_array( $schema_data['keys'] ) ) {
+			$primary_used = false;
+			foreach ( $schema_data['keys'] as $key => $properties ) {
+				$field_line = '';
+				$unique     = ! empty( $properties['unique'] );
+				$primary    = ! empty( $properties['primary'] );
+
+				if ( $primary && $primary_used ) {
+					continue;
+				}
+
+				if ( $unique ) {
+					$field_line .= 'UNIQUE ';
+				} else if ( $primary ) {
+					$field_line .= 'PRIMARY ';
+				}
+
+				$field_line .= 'KEY ';
+				if ( $unique ) {
+					$field_line .= "{$key} ";
+				}
+				$field_line .= '(' . implode( ',', $properties['columns'] ) . ')';
+				$field_line = rtrim( $field_line );
+				if ( $primary ) {
+					$primary_used = true;
+				}
+				$field_lines[] = $field_line;
+			}
+		}
+
+
 		$charset_collate = $this->wpdb->get_charset_collate();
 
 		$schema .= implode( ",\n", $field_lines ) . "\m";
