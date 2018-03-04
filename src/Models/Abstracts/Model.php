@@ -191,7 +191,7 @@ abstract class Model extends Component {
 				if ( $unique ) {
 					$field_line .= "{$key} ";
 				}
-				$field_line .= '(' . implode( ',', $properties['columns'] ) . ')';
+				$field_line .= '(' . implode( ',', (array) $properties['columns'] ) . ')';
 				$field_line = rtrim( $field_line );
 				if ( $primary ) {
 					$primary_used = true;
